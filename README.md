@@ -1,50 +1,69 @@
-# React + TypeScript + Vite
+# User Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это приложение для управления пользователями, позволяющее добавлять, просматривать и редактировать информацию о пользователях. Все данные о пользователях хранятся в **IndexedDB**, а для глобального состояния используется **Redux Toolkit**.
 
-Currently, two official plugins are available:
+## Функции
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Добавление нового пользователя**: Пользователи могут быть добавлены с помощью формы. Каждый пользователь имеет имя, email, телефон и город.
+- **Просмотр данных пользователя**: При клике на пользователя можно увидеть подробную информацию о нем (имя, email, телефон и город).
+- **Использование локального хранилища (IndexedDB)**: Все данные пользователей сохраняются в IndexedDB для быстрого доступа и работы без интернета.
+- **Глобальное состояние с Redux**: Redux используется для хранения данных о пользователях и управления состоянием приложения.
 
-## Expanding the ESLint configuration
+## Стек технологий
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** — библиотека для создания пользовательских интерфейсов.
+- **Redux Toolkit** — для управления состоянием.
+- **Dexie.js** — для работы с IndexedDB.
+- **Tailwind CSS** — для стилизации приложения.
 
-- Configure the top-level `parserOptions` property like this:
+## Запуск проекта
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Клонируйте репозиторий:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+    ```bash
+    git clone https://github.com/yourusername/your-repository-name.git
+    ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. Перейдите в папку с проектом:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+    ```bash
+    cd your-repository-name
+    ```
+
+3. Установите зависимости:
+
+    ```bash
+    npm install
+    ```
+
+4. Запустите проект в режиме разработки:
+
+    ```bash
+    npm start
+    ```
+
+   Приложение будет доступно по адресу: [http://localhost:5189](http://localhost:5189).
+
+5. Для сборки проекта в продакшн:
+
+    ```bash
+    npm run build
+    ```
+
+6. Для предварительного просмотра сборки:
+
+    ```bash
+    npm run preview
+    ```
+
+## Скрипты
+
+- `npm run start`: Запускает приложение с параметром `--host` на порту `5189`.
+- `npm run dev`: Запускает приложение в режиме разработки с помощью **Vite**.
+- `npm run build`: Собирает приложение для продакшн (использует **TypeScript** и **Vite**).
+- `npm run lint`: Запускает **ESLint** для проверки кода на ошибки.
+- `npm run preview`: Предварительный просмотр собранного приложения.
+
+## Лицензия
+
+Этот проект лицензируется под лицензией MIT.
