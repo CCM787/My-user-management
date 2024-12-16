@@ -1,26 +1,14 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser as addUserRedux } from "../../state/user.slice";
 import { addUser as addUserDb } from "../../utils/db";
-import { User } from "../../types/common";
-import {
-  required,
-  emailValid,
-  phoneValid,
-  nameValid,
-} from "../../utils/validation";
+import { FormErrors, User } from "../../types/common";
+import { required, emailValid, phoneValid, nameValid } from "./validation";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../../routes";
 import { UserButton } from "../../components/user-button/user-button";
 
-interface FormErrors {
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  city: string | null;
-}
-
-export const AddUserPage: React.FC = () => {
+export const AddUserPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -85,8 +73,8 @@ export const AddUserPage: React.FC = () => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Имя"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
+            placeholder="Введите имя"
             onBlur={() => setErrors({ ...errors, name: required(name) })}
           />
           {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
@@ -100,8 +88,8 @@ export const AddUserPage: React.FC = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Электронная почта"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
+            placeholder="Введите email"
             onBlur={() => setErrors({ ...errors, email: emailValid(email) })}
           />
           {errors.email && (
@@ -117,8 +105,8 @@ export const AddUserPage: React.FC = () => {
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Телефон"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
+            placeholder="Введите номер телефона"
             onBlur={() => setErrors({ ...errors, phone: phoneValid(phone) })}
           />
           {errors.phone && (
@@ -134,8 +122,8 @@ export const AddUserPage: React.FC = () => {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Город"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
+            placeholder="Введите город"
             onBlur={() => setErrors({ ...errors, city: required(city) })}
           />
           {errors.city && <p className="text-sm text-red-600">{errors.city}</p>}

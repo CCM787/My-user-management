@@ -4,7 +4,6 @@ import { MainPage, AddUserPage, UserDetailsPage } from "../pages";
 import { Path } from "./index";
 
 export const RoutesComponent: FC = () => {
-  console.log("Routes component");
   return (
     <BrowserRouter>
       <Routes>

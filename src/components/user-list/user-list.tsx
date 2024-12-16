@@ -17,7 +17,7 @@ export const UserList: FC = () => {
   }, [dispatch]);
 
   const handleUserClick = (userId: number) => {
-    navigate(`/user/${userId}`);
+    navigate(`${Path.User}/${userId}`);
   };
 
   const handleClick = () => {

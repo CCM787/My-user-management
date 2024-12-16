@@ -20,41 +20,41 @@
 
 1. Клонируйте репозиторий:
 
-    ```bash
-    git clone https://github.com/yourusername/your-repository-name.git
-    ```
+   ```bash
+   git clone https://github.com/yourusername/your-repository-name.git
+   ```
 
 2. Перейдите в папку с проектом:
 
-    ```bash
-    cd your-repository-name
-    ```
+   ```bash
+   cd your-repository-name
+   ```
 
 3. Установите зависимости:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 4. Запустите проект в режиме разработки:
 
-    ```bash
-    npm start
-    ```
+   ```bash
+   npm start
+   ```
 
    Приложение будет доступно по адресу: [http://localhost:5189](http://localhost:5189).
 
 5. Для сборки проекта в продакшн:
 
-    ```bash
-    npm run build
-    ```
+   ```bash
+   npm run build
+   ```
 
 6. Для предварительного просмотра сборки:
 
-    ```bash
-    npm run preview
-    ```
+   ```bash
+   npm run preview
+   ```
 
 ## Скрипты
 
@@ -63,7 +63,3 @@
 - `npm run build`: Собирает приложение для продакшн (использует **TypeScript** и **Vite**).
 - `npm run lint`: Запускает **ESLint** для проверки кода на ошибки.
 - `npm run preview`: Предварительный просмотр собранного приложения.
-
-## Лицензия
-
-Этот проект лицензируется под лицензией MIT.

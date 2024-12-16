@@ -15,14 +15,19 @@ export interface InputFieldProps {
 }
 
 export interface FormErrors {
-  name: string | null | undefined;
-  email: string | null | undefined;
-  phone: string | null | undefined;
-  city: string | null | undefined;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  city: string | null;
 }
 
 export interface ButtonProps {
   onClick: () => void;
   label: string;
-  className?: string
+  className?: string;
+}
+
+export interface UserState {
+  users: User[];
+  selectedUser: User | null;
 }

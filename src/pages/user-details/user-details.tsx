@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
@@ -6,7 +6,7 @@ import { User } from "../../types/common";
 import { getAllUsers } from "../../utils/db";
 import { UserButton } from "../../components/user-button/user-button";
 
-export const UserDetailsPage: React.FC = () => {
+export const UserDetailsPage: FC = () => {
   const { userId } = useParams<{ userId: string }>();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
