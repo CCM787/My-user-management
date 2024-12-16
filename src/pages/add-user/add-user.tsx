@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser as addUserRedux } from "../../state/user.slice";
-import { addUser as addUserDb } from "../../utils/db";
+import { useNavigate } from "react-router-dom";
 import { FormErrors, User } from "../../types/common";
 import { required, emailValid, phoneValid, nameValid } from "./validation";
-import { useNavigate } from "react-router-dom";
 import { Path } from "../../routes";
 import { UserButton } from "../../components/user-button/user-button";
+import { addUserToDbAndRedux } from "../../utils/user-service";
+import { InputField } from "../../components/input-fields/input-fields";
+import { toast } from "react-toastify";
 
 export const AddUserPage: FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const AddUserPage: FC = () => {
     city: null,
   });
 
-  const validate = () => {
+  const validate = (): boolean => {
     const newErrors: FormErrors = {
       name: required(name) || nameValid(name),
       email: required(email) || emailValid(email),
@@ -37,24 +38,25 @@ export const AddUserPage: FC = () => {
 
   const handleSubmit = async () => {
     if (validate()) {
-      const newUser: User = { name, email, phone, city };
-      const userId = await addUserDb(newUser);
+      try {
+        const newUser: User = { name, email, phone, city };
+        await addUserToDbAndRedux(newUser, dispatch);
 
-      dispatch(
-        addUserRedux({
-          ...newUser,
-          id: userId,
-        })
-      );
+        toast.success("Пользователь успешно добавлен!");
 
-      alert("Пользователь добавлен!");
-      navigate(Path.Home);
-      setName("");
-      setEmail("");
-      setPhone("");
-      setCity("");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setCity("");
+
+        navigate(Path.Home);
+      } catch (error) {
+        console.error("Ошибка при добавлении пользователя:", error);
+
+        toast.error("Произошла ошибка. Попробуйте снова.");
+      }
     } else {
-      alert("Пожалуйста, исправьте ошибки.");
+      toast.warn("Пожалуйста, исправьте ошибки в форме.");
     }
   };
 
@@ -67,73 +69,48 @@ export const AddUserPage: FC = () => {
         onSubmit={(e) => e.preventDefault()}
         className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
       >
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Имя</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
-            placeholder="Введите имя"
-            onBlur={() => setErrors({ ...errors, name: required(name) })}
-          />
-          {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
-        </div>
+        <InputField
+          label="Имя"
+          value={name}
+          onChange={setName}
+          type="text"
+          error={errors.name}
+          onBlur={() => setErrors({ ...errors, name: required(name) })}
+        />
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Электронная почта
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
-            placeholder="Введите email"
-            onBlur={() => setErrors({ ...errors, email: emailValid(email) })}
-          />
-          {errors.email && (
-            <p className="text-sm text-red-600">{errors.email}</p>
-          )}
-        </div>
+        <InputField
+          label="Электронная почта"
+          value={email}
+          onChange={setEmail}
+          type="email"
+          error={errors.email}
+          onBlur={() => setErrors({ ...errors, email: emailValid(email) })}
+        />
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Телефон
-          </label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
-            placeholder="Введите номер телефона"
-            onBlur={() => setErrors({ ...errors, phone: phoneValid(phone) })}
-          />
-          {errors.phone && (
-            <p className="text-sm text-red-600">{errors.phone}</p>
-          )}
-        </div>
+        <InputField
+          label="Телефон"
+          value={phone}
+          onChange={setPhone}
+          type="text"
+          error={errors.phone}
+          onBlur={() => setErrors({ ...errors, phone: phoneValid(phone) })}
+        />
 
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700">
-            Город
-          </label>
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center"
-            placeholder="Введите город"
-            onBlur={() => setErrors({ ...errors, city: required(city) })}
-          />
-          {errors.city && <p className="text-sm text-red-600">{errors.city}</p>}
-        </div>
+        <InputField
+          label="Город"
+          value={city}
+          onChange={setCity}
+          type="text"
+          error={errors.city}
+          onBlur={() => setErrors({ ...errors, city: required(city) })}
+        />
 
         <UserButton
           onClick={handleSubmit}
           className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           label="Добавить"
         />
+
         <div className="mt-6 text-center">
           <UserButton
             onClick={() => window.history.back()}
